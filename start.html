@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tata Power Landing Page</title>
+    <style>
+        /* Style for body and page elements */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container for background video */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.3; /* Set the video opacity low */
+        }
+
+        /* Style for logo */
+        .logo {
+            width: 300px; /* Adjust logo size as needed */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Center content container */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        /* Style for "Getting Started" button */
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background video -->
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="img/Haldia Tata Power video preview copy 2nd.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+    </div>
+
+    <!-- Central content with logo and button -->
+    <div class="content">
+        <img src="img/logo.png" alt="Tata Power Logo" class="logo">
+        <h1>Welcome to Tata Power</h1>
+        <button class="btn" onclick="location.href='index.html'">Get Started</button>
+    </div>
+
+</body>
+</html>
