@@ -1,210 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Parts Data Entry</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Hide the form initially */
-        #dataForm {
-            display: none;
-        }
-        .warning {
-            border: 2px solid red;
-        }
-    </style>
+    <title>Tata Power Landing Page</title>
+    <link rel="stylesheet" href="start.css">
 </head>
-
 <body>
-    <h1>Click on a Machine Part to Enter Data</h1>
+    <!-- Background video -->
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="img/intro.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+    </div>
 
-    <!-- Buttons for Machine Parts -->
-    <button class="part" onclick="showForm('SST-1')">SST-1</button>
-    <button class="part" onclick="showForm('SST-2')">SST-2</button>
-    <button class="part" onclick="showForm('SST-3')">SST-3</button>
-    <button class="part" onclick="showForm('SST-4')">SST-4</button>
-    <button class="part" onclick="showForm('ACPT-1')">ACPT-1</button>
-    <button class="part" onclick="showForm('ACPT-2')">ACPT-2</button>
-    <button class="part" onclick="showForm('BAT-1')">BAT-1</button>
-    <button class="part" onclick="showForm('BAT-2')">BAT-2</button>
-    <button class="part" onclick="showForm('BAT-3')">BAT-3</button>
-    <button class="part" onclick="showForm('BAT-4')">BAT-4</button>
-
-    <!-- Form to Collect Data -->
-    <form id="dataForm">
-        <h2 id="formTitle"></h2>
-
-        <!-- Date field -->
-        <div class="label-container">
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
-        </div>
-
-        <!-- Time field -->
-        <div class="label-container">
-            <label for="time">Time</label>
-            <input type="time" id="time" name="time" required>
-        </div>
-
-        <div class="label-container">
-            <label for="oti">OTI</label>
-            <input type="text" id="oti" name="oti" required>
-        </div>
-
-        <div class="label-container">
-            <label for="wti">WTI</label>
-            <input type="text" id="wti" name="wti" required>
-        </div>
-
-        <div class="label-container">
-            <label for="tap">Tap</label>
-            <input type="text" id="tap" name="tap" required>
-        </div>
-
-        <div class="label-container">
-            <label for="current">Current</label>
-            <input type="text" id="current" name="current" required>
-        </div>
-
-        <div class="label-container">
-            <label for="silicaGel">Silica Gel Condition</label>
-            <input type="text" id="silicaGel" name="silicaGel" required>
-        </div>
-
-        <div class="label-container">
-            <label for="mog">Oil Level Main Tank (MOG)</label>
-            <input type="text" id="mog" name="mog" required>
-        </div>
-
-        <div class="label-container">
-            <label for="gaugeGlass">Oil Level Main Tank (Gauge Glass)</label>
-            <input type="text" id="gaugeGlass" name="gaugeGlass" required>
-        </div>
-
-        <div class="radio-group">
-            <label>Any Oil Leakage:</label>
-            <input type="radio" id="oilLeakageYes" name="oilLeakage" value="Yes">
-            <label for="oilLeakageYes">Yes</label>
-            <input type="radio" id="oilLeakageNo" name="oilLeakage" value="No">
-            <label for="oilLeakageNo">No</label>
-        </div>
-
-        <div class="label-container">
-            <label for="remarks">Remarks</label>
-            <textarea id="remarks" name="remarks" rows="4"></textarea>
-        </div>
-
-        <button type="button" class="submit-btn" onclick="submitForm()">Submit Data</button>
-    </form>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
-    <script>
-        let selectedPart = '';
-        let allData = {};
-
-        function showForm(partName) {
-            selectedPart = partName;
-            document.getElementById('formTitle').innerText = 'Data Entry for ' + partName;
-            document.getElementById('dataForm').style.display = 'block';
-            document.getElementById('wti').classList.remove('warning');
-        }
-
-        function validateWTI() {
-            const wtiInput = document.getElementById('wti');
-            const wtiValue = parseFloat(wtiInput.value);
-            if (selectedPart === 'SST-1' && wtiValue > 10) {
-                wtiInput.classList.add('warning');
-            } else if (selectedPart === 'SST-2' && wtiValue > 11) {
-                wtiInput.classList.add('warning');
-            } else {
-                wtiInput.classList.remove('warning');
-            }
-        }
-
-        function submitForm() {
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-
-    const wtiValue = parseFloat(document.getElementById('wti').value);
-    if (selectedPart === 'SST-1' && wtiValue > 10) {
-        alert('Warning: Critical value for SST-1. Check immediately!');
-    } else if (selectedPart === 'SST-2' && wtiValue > 11) {
-        alert('Warning: Critical value for SST-2. Check immediately!');
-    }
-
-    const formData = {
-        Date: date,
-        Time: time,
-        OTI: document.getElementById('oti').value,
-        WTI: document.getElementById('wti').value,
-        Tap: document.getElementById('tap').value,
-        Current: document.getElementById('current').value,
-        SilicaGel: document.getElementById('silicaGel').value,
-        OilLevelMOG: document.getElementById('mog').value,
-        OilLevelGaugeGlass: document.getElementById('gaugeGlass').value,
-        OilLeakage: document.querySelector('input[name="oilLeakage"]:checked').value,
-        Remarks: document.getElementById('remarks').value
-    };
-
-    if (!allData[selectedPart]) {
-        allData[selectedPart] = [];
-    }
-    allData[selectedPart].push(formData);
-
-    saveToExcel();
-    alert("Data updated and saved successfully!");
-    document.getElementById("dataForm").reset();
-    document.getElementById('dataForm').style.display = 'none'; // Hide form after submission
-}
-
-
-function saveToExcel() {
-    const wb = XLSX.utils.book_new();
-
-    for (const part in allData) {
-        // Prepare the data with heading
-        const heading = [
-            ["Date", "Time", "OTI", "WTI", "Tap", "Current", "Silica Gel", "Oil Level MOG", "Oil Level Gauge Glass", "Oil Leakage", "Remarks"]
-        ];
-
-        // Convert form data to array format and append to the heading
-        const formDataArray = allData[part].map(row => [
-            row.Date, row.Time, row.OTI, row.WTI, row.Tap, row.Current, row.SilicaGel, row.OilLevelMOG, row.OilLevelGaugeGlass, row.OilLeakage, row.Remarks
-        ]);
-
-        // Create a new worksheet for each machine part with the combined data
-        const wsData = heading.concat(formDataArray);
-        const ws = XLSX.utils.aoa_to_sheet(wsData);
-
-        // Append sheet for the part
-        XLSX.utils.book_append_sheet(wb, ws, part);
-    }
-
-    // Convert the workbook to binary string and create a blob for download
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-    // Convert binary string to array buffer
-    function s2ab(s) {
-        const buf = new ArrayBuffer(s.length);
-        const view = new Uint8Array(buf);
-        for (let i = 0; i < s.length; i++) {
-            view[i] = s.charCodeAt(i) & 0xFF;
-        }
-        return buf;
-    }
-
-    // Create a blob and trigger a download
-    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'Daily_Checklist_of_Transformers.xlsx';
-    link.click();
-}
-
-
-    </script>
+    <!-- Central content with animated heading -->
+    <div class="content">
+        <!-- Logo above the h1 tag -->
+        <img src="img/logo.png" alt="Tata Power Logo" class="logo">
+        <h1>
+            <span class="first-letter">W</span><span class="rest">e</span><span class="rest">l</span><span class="rest">c</span><span class="rest">o</span><span class="rest">m</span><span class="rest">e</span> 
+            <span class="rest"> </span><span class="rest">t</span><span class="rest">o</span> 
+            <span class="rest"> </span><span class="rest">T</span><span class="rest">a</span><span class="rest">t</span><span class="rest">a</span> 
+            <span class="rest"> </span><span class="rest">P</span><span class="rest">o</span><span class="rest">w</span><span class="rest">e</span><span class="rest">r</span>
+        </h1>
+        <button class="btn" onclick="location.href='First.html'">Get Started</button>
+    </div>
 </body>
-
 </html>
